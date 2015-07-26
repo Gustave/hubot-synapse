@@ -1,0 +1,21 @@
+{
+  "name": "hubot-synapse",
+  "version": "0.1.0",
+  "description": "Uses redis pub-sub to allow Hubot to incorporate scripts written in other languages.",
+  "author": "Andrew Guenther",
+  "license": "MIT",
+
+  "keywords": [
+    "hubot",
+    "gustave",
+    "synapse"
+  ],
+
+  "dependencies": {
+    "coffee-script": "1.8",
+    "redis": "0.12",
+    "hubot": "2.8.1"
+  },
+
+  "main": "index.coffee"
+}

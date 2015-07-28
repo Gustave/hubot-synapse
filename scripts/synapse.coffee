@@ -7,16 +7,10 @@ module.exports = (robot) ->
   pubClient = Redis.createClient(info.port, info.hostname)
   prefix = robot.name
 
-  channelName = (action) ->
-    return "#{prefix}:#{action}"
+  channelName = (direction, action) ->
+    return "#{prefix}:#{direction}:#{action}"
 
-  channelNames = (actions...) ->
-    channels = []
-    for action in actions
-      channels.push channelName(action)
-    return channels
-
-  subClient.on "message", (channel, json) ->
+  subClient.on "pmessage", (pattern, channel, json) ->
     try
       message = JSON.parse json
     catch
@@ -29,27 +23,19 @@ module.exports = (robot) ->
       robot.logger.debug message
       return
 
+    func = channel.split(":")[2]
     response = new robot.Response robot, message, null
-    if channel == channelName("send")
-      response.send message.body
-    if channel == channelName("emote")
-      response.emote message.body
-    if channel == channelName("reply")
-      response.reply message.body
-    if channel == channelName("topic")
-      response.topic message.body
-    if channel == channelName("play")
-      response.play message.body
-    if channel == channelName("locked")
-      response.locked message.body
+    if func of response and typeof response[func] == 'function'
+      response[func] message.body
+    else
+      robot.logger.debug "Received message with invalid operation on #{channel}"
 
-  for channel in channelNames("send", "emote", "reply", "topic", "play", "locked")
-   subClient.subscribe channel
+  subClient.psubscribe "#{prefix}:out:*"
 
   pubGenerator = (channel) ->
     return (response) ->
       robot.logger.debug "Message published to #{channel}"
-      pubClient.publish channelName(channel), JSON.stringify(response.message)
+      pubClient.publish channelName("in", channel), JSON.stringify(response.message)
 
   robot.hear /^/i, pubGenerator("hear")
 

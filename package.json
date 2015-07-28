@@ -5,16 +5,22 @@
   "author": "Andrew Guenther",
   "license": "MIT",
 
+  "repository": {
+     "type": "git",
+     "url": "https://github.com/Gustave/hubot-synapse.git"
+  },
+
   "keywords": [
     "hubot",
+    "hubot-scripts",
     "gustave",
     "synapse"
   ],
 
   "dependencies": {
-    "coffee-script": "1.8",
-    "redis": "0.12",
-    "hubot": "2.8.1"
+    "coffee-script": "^1.8",
+    "redis": "^0.8.4",
+    "hubot": "^2.8.1"
   },
 
   "main": "index.coffee"

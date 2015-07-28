@@ -21,15 +21,15 @@ module.exports = (robot) ->
     try
       message = JSON.parse json
     catch
-      robot.logger.debug "Received message on #{channel} was not valid JSON"
-      robot.logger.debug json
+      robot.logger.error "Received message on #{channel} was not valid JSON"
+      robot.logger.error json
       return
     
     func = channel.split(":")[2]
     if func of robot.adapter and typeof robot.adapter[func] == 'function'
       robot.adapter[func] envelopeGenerator(message.user, message.room), message.message
     else
-      robot.logger.debug "Received message with invalid operation on #{channel}"
+      robot.logger.error "Received message with invalid operation on #{channel}"
 
   subClient.psubscribe "#{prefix}:out:*"
 

@@ -53,7 +53,7 @@ module.exports = (robot) ->
 
   robot.hear /^/i, pubGenerator("hear")
 
-  robot.respond /^/i, pubGenerator("respond")
+  robot.respond /.*/i, pubGenerator("respond")
 
   robot.enter pubGenerator("enter")
 

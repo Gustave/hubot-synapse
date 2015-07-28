@@ -10,23 +10,24 @@ module.exports = (robot) ->
   channelName = (direction, action) ->
     return "#{prefix}:#{direction}:#{action}"
 
+  envelopeGenerator = (user, room) ->
+    return {
+      user: robot.brain.userForId(user),
+      room: room,
+      message: null
+    }
+
   subClient.on "pmessage", (pattern, channel, json) ->
     try
       message = JSON.parse json
     catch
-      robot.logger.debug "Received invalid message on #{channel}"
+      robot.logger.debug "Received message on #{channel} was not valid JSON"
       robot.logger.debug json
       return
     
-    if not message.user? or not message.room? or not message.body?
-      robot.logger.debug "Received invalid message on #{channel}"
-      robot.logger.debug message
-      return
-
     func = channel.split(":")[2]
-    response = new robot.Response robot, message, null
-    if func of response and typeof response[func] == 'function'
-      response[func] message.body
+    if func of robot.adapter and typeof robot.adapter[func] == 'function'
+      robot.adapter[func] envelopeGenerator(message.user, message.room), message.message
     else
       robot.logger.debug "Received message with invalid operation on #{channel}"
 
@@ -35,7 +36,12 @@ module.exports = (robot) ->
   pubGenerator = (channel) ->
     return (response) ->
       robot.logger.debug "Message published to #{channel}"
-      pubClient.publish channelName("in", channel), JSON.stringify(response.message)
+      message = response.message
+      pubClient.publish channelName("in", channel), JSON.stringify({
+         user: message.user.id,
+         room: message.room,
+         message: message.text
+      })
 
   robot.hear /^/i, pubGenerator("hear")
 

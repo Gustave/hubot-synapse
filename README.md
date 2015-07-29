@@ -59,7 +59,7 @@ exist, Hubot will log an error.
 Outgoing messages are read from the channel as JSON. The expected form is
 identical to the incoming form.
 
-# Thats is?
+# That's it?
 
 "What is my purpose?"
 

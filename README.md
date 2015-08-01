@@ -2,6 +2,20 @@
 Use Redis pub-sub to allow Hubot to incorporate scripts written in other
 languages.
 
+## Installing
+
+```
+npm install hubot-synapse
+```
+
+And add `hubot-synapse` to you Hubot's `external-scripts.json` file
+
+```javascript
+// external-scripts.json
+
+['hubot-synapse']
+```
+
 ## Why?
 Sometimes, you may not want to write your Hubot scripts in Coffeescript. Or
 maybe, you want to have a simple way to communicate with your Hubot from a

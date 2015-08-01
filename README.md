@@ -2,7 +2,7 @@
 Use Redis pub-sub to allow Hubot to incorporate scripts written in other
 languages.
 
-# Why?
+## Why?
 Sometimes, you may not want to write your Hubot scripts in Coffeescript. Or
 maybe, you want to have a simple way to communicate with your Hubot from a
 remote machine. Maybe you want to give everyone in your office the ability
@@ -11,7 +11,7 @@ desktops all the while your Hubot goes about its business blissfully unaware.
 
 Whatever your use case, Synapse is for you.
 
-# How?
+## How?
 Glad you asked. Synapse uses the pub/sub functionality of the same Redis
 instance that you're likely running as your Hubot persistence layer.
 Two for one! Everybody wins!
@@ -23,7 +23,7 @@ request. Thanks champ.
 
 Here's the docs.
 
-## Receiving Messages
+### Receiving Messages
 Messages sent out to channels of the form: `<prefix>:in:<operation>`.
 
 Here, the prefix is either the name of the Hubot instance, or specified after
@@ -48,7 +48,7 @@ Incoming messages will be JSON of the form:
 }
 ```
 
-## Sending Messages
+### Sending Messages
 Messages can be sent to the Hubot on any channel of the form:
 `<prefix>:out:<operation>`
 
@@ -59,10 +59,10 @@ exist, Hubot will log an error.
 Outgoing messages are read from the channel as JSON. The expected form is
 identical to the incoming form.
 
-# That's it?
+## That's it?
 
 "What is my purpose?"
 
 To pass messages.
 
-![](http://i.imgur.com/IxC2SCj.gif)
+![To pass butter.](http://i.imgur.com/IxC2SCj.gif)

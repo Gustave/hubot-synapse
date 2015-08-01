@@ -1,6 +1,6 @@
 {
   "name": "hubot-synapse",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Uses redis pub-sub to allow Hubot to incorporate scripts written in other languages.",
   "author": "Andrew Guenther",
   "license": "MIT",

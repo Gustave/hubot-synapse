@@ -1,4 +1,6 @@
 # Synapse
+[![npm version](https://badge.fury.io/js/hubot-synapse.svg)](http://badge.fury.io/js/hubot-synapse)
+
 Use Redis pub-sub to allow Hubot to incorporate scripts written in other
 languages.
 

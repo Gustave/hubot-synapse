@@ -45,7 +45,12 @@ module.exports = (robot) ->
     
     func = channel.split(":")[2]
     if func of robot.adapter and typeof robot.adapter[func] == 'function'
-      robot.adapter[func] envelopeGenerator(message.user, message.room), message.message
+      try
+        robot.adapter[func] envelopeGenerator(message.user, message.room), message.message
+      catch
+        robot.logger.error "Received malformed message data"
+        robot.logger.error json
+        return
     else
       robot.logger.error "Received message with invalid operation on #{channel}"
 
